@@ -54,7 +54,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file fuzz/mayhem/${{ env.JSON_MAYHEMFILE }}
+                --file mayhem/${{ env.JSON_MAYHEMFILE }}
           sarif-output: sarif
 
       - name: Start analysis for parser
@@ -62,7 +62,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file fuzz/mayhem/${{ env.PARSER_MAYHEMFILE }}
+                --file mayhem/${{ env.PARSER_MAYHEMFILE }}
           sarif-output: sarif
 
       - name: Start analysis for toml
@@ -70,7 +70,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file fuzz/mayhem/${{ env.TOML_MAYHEMFILE }}
+                --file mayhem/${{ env.TOML_MAYHEMFILE }}
           sarif-output: sarif
 
       - name: Upload SARIF file(s)
