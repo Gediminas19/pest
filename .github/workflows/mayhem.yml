@@ -7,9 +7,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  JSON_MAYHEMFILE: json.mayhemfile
-  PARSER_MAYHEMFILE: parser.mayhemfile
-  TOML_MAYHEMFILE: toml.mayhemfile
 
 jobs:
   build:
@@ -54,7 +51,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/${{ env.JSON_MAYHEMFILE }}
+                --file mayhem/json.mayhemfile
           sarif-output: sarif
 
       - name: Start analysis for parser
@@ -62,7 +59,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/${{ env.PARSER_MAYHEMFILE }}
+                --file mayhem/parser.mayhemfile
           sarif-output: sarif
 
       - name: Start analysis for toml
@@ -70,7 +67,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/${{ env.TOML_MAYHEMFILE }}
+                --file mayhem/toml.mayhemfile
           sarif-output: sarif
 
       - name: Upload SARIF file(s)
