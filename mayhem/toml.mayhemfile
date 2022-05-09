@@ -1,0 +1,5 @@
+project: pest
+target: toml
+
+cmds:
+  - cmd: /pest/grammars/fuzz/target/x86_64-unknown-linux-gnu/release/toml

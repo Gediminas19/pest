@@ -1,0 +1,5 @@
+project: pest
+target: parser
+
+cmds:
+  - cmd: /pest/meta/fuzz/target/x86_64-unknown-linux-gnu/release/parser

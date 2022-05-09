@@ -7,6 +7,9 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  JSON_MAYHEMFILE: json.mayhemfile
+  PARSER_MAYHEMFILE: parser.mayhemfile
+  TOML_MAYHEMFILE: toml.mayhemfile
 
 jobs:
   build:
@@ -40,16 +43,33 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: mayhem
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Start analysis
+      - name: Start analysis for json
         uses: ForAllSecure/mcode-action@v1
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
+                --file fuzz/mayhem/${{ env.JSON_MAYHEMFILE }}
+          sarif-output: sarif
+
+      - name: Start analysis for parser
+        uses: ForAllSecure/mcode-action@v1
+        with:
+          mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
+          args: --image ${{ steps.meta.outputs.tags }}
+                --file fuzz/mayhem/${{ env.PARSER_MAYHEMFILE }}
+          sarif-output: sarif
+
+      - name: Start analysis for toml
+        uses: ForAllSecure/mcode-action@v1
+        with:
+          mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
+          args: --image ${{ steps.meta.outputs.tags }}
+                --file fuzz/mayhem/${{ env.TOML_MAYHEMFILE }}
           sarif-output: sarif
 
       - name: Upload SARIF file(s)
