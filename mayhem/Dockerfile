@@ -1,4 +1,4 @@
-FROM fuzzers/cargo-fuzz:0.10.0
+FROM fuzzers/cargo-fuzz:0.10.0 as builder
 
 ADD . /pest
 WORKDIR /pest
@@ -8,5 +8,5 @@ RUN cargo bootstrap && RUSTFLAGS="-Znew-llvm-pass-manager=no" cargo +nightly fuz
 WORKDIR /pest/grammars
 RUN cargo bootstrap && RUSTFLAGS="-Znew-llvm-pass-manager=no" cargo +nightly fuzz build
 
-# Set to fuzz!
-ENTRYPOINT []
+FROM ubuntu:20.04
+COPY --from=builder /pest/meta/fuzz/target/x86_64-unknown-linux-gnu/release /
