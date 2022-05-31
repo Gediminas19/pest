@@ -8,6 +8,10 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  JSON: mayhem/json.mayhemfile
+  PARSER: mayhem/parser.mayhemfile
+  TOML: mayhem/toml.mayhemfile
+  
 
 jobs:
   build:
@@ -52,7 +56,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/json.mayhemfile
+                --file ${{ env.JSON }}
                 --duration 300
           sarif-output: sarif
 
@@ -61,7 +65,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/parser.mayhemfile
+                --file ${{ env.PARSER }}
                 --duration 300
           sarif-output: sarif
 
@@ -70,7 +74,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           args: --image ${{ steps.meta.outputs.tags }}
-                --file mayhem/toml.mayhemfile
+                --file ${{ env.TOML }}
                 --duration 300
           sarif-output: sarif
 
